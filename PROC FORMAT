@@ -1,0 +1,16 @@
+data fmt;
+  set outdir.unique_mem(where=(aaaa = "&bbb")) ;
+  start=compress(memberno);
+  label='+';
+  type='C';
+  fmtname="mem";
+run;
+
+proc format cntlin=fmt;
+run;
+
+options fmtsearch=(work);
+data want_data;
+  set have_data( Keep=clm_id srv_bdt srv_edt srv_bdt hic_num src_prov_id) ;
+  if put(compress(memberno),$mem.)='+' then output;
+run; 
